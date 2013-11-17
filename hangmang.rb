@@ -1,16 +1,41 @@
 #! /usr/bin/env ruby
 
-puts "Program goes here..."
+puts "Welcome to Hangman!"
 
-def gamemaster
   random_word = ["hello", "count", "user", "launch", "academy"]
-  range = random_word.size 
-  random_word[rand(range)]
-end
+  guess_word = random_word.sample
+  guess_left = 10 
 
-def show_progress
-  
+  letter_count = guess_word.split("").count
+  hidden = "_" * letter_count 
 
-end
+  print "Word: #{hidden}(#{letter_count.size})" 
+  puts " - Guesses remaining: #{guess_left}"
+  print "Guess a single letter (a-z) or the entire word: "  
+  puts words = gets.chomp
 
-puts gamemaster
+  while guess_left != 0  
+  print "Word: #{hidden}(#{letter_count.size})" 
+    if words.size > 1
+      if words == guess_word
+        puts "guess the word and you got it wrong."
+        exit
+      else
+        puts "You guess the wrong word. You lose."
+        exit
+      end
+    else
+      if guess_word.include?(words) 
+        puts "There is a guess"
+      else
+        puts "Sorry, no letters found"
+      end
+    end
+    guess_left -= 1
+    puts "Guesses remaining: #{guess_left}"
+    print "Guess a single letter (a-z) or the entire word: "  
+    puts words = gets.chomp
+  end
+
+
+
