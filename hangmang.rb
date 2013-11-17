@@ -1,4 +1,6 @@
 def guess_input
+  puts "Word: #{@answer}(#{@letter_count.size}): " 
+  puts "Guesses remaining: #{@guess_left}"
   print "Guess a single letter (a-z) or the entire word: "  
   @guess = gets.chomp
 end
@@ -19,14 +21,15 @@ def guess_word
   random_word = ["array"]
   @guess_word = random_word.sample
   @guess_left = 10 
+  @submitted_word = []
 end
 
 def game_loop
-  while @guess_left != 1  
+  while @guess_left != 0  
     if @guess.size > 1
       ending_message
     else
-      if @guess_word.include?(@guess) 
+      if @guess_word.include?(@guess) || @submitted_word.include?(@guess)
           i = @guess_word.index(@guess)
         @guess_word.count(@guess).times do 
           value = @guess_word.index(@guess, i) 
@@ -44,12 +47,12 @@ def game_loop
       else
         puts
         puts "Sorry, no letters found"
+        @submitted_word << @guess 
         puts
         @guess_left -= 1
+        break if @guess_left == 0 
       end
     end
-    puts "Word: #{@answer}"
-    puts "Guesses remaining: #{@guess_left}"
     guess_input 
   end
 end
@@ -66,13 +69,12 @@ def create_hidden_format_of_answer
 end
 
 
-puts "Welcome to Hangman!"
+  puts "Welcome to Hangman!"
 
   guess_word
+
   create_hidden_format_of_answer
 
-  puts "Word: #{@answer}(#{@letter_count.size}): " 
-  puts "Guesses remaining: #{@guess_left}"
-  
   guess_input 
+ 
   game_loop 
