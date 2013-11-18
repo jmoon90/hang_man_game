@@ -18,11 +18,7 @@ def incorrect_guess_output
 end
 
 def ending_message
-  if @guess == @guess_word
-    correct_guess_output
-  else
-    incorrect_guess_output
-  end
+   @guess == @guess_word ? correct_guess_output : incorrect_guess_output
 end
 
 def guess_word
@@ -62,10 +58,7 @@ def game_loop
       if @guess_word.include?(@guess) || @submitted_word.include?(@guess)
         @i = @guess_word.index(@guess)
         guess_letter_position
-
-        if @answer.join('') == @guess_word
-          correct_guess_output
-        end
+          correct_guess_output if @answer.join('') == @guess_word
         letter_occurence_in_word
       else
         wrong_letter_guess_output
